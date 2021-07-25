@@ -1,9 +1,9 @@
 const path = require("path");
 
 module.exports = {
-    entry: path.join(dirname, "frontend", "index.jsx"),
+    entry: path.join(__dirname, "frontend", "index.jsx"),
     output: {
-        path: path.join(dirname, "app", "assets", "javascripts"),
+        path: path.join(__dirname, "app", "assets", "javascripts"),
         filename: "bundle.js"
     },
     resolve: {
@@ -15,7 +15,7 @@ module.exports = {
                 exclude: /(node_modules)/,
                 use: {
                     loader: "babel-loader",
-                    query: {
+                    options: {
                         presets: ["@babel/env", "@babel/react"]
                     }
                 }
