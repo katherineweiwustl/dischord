@@ -6337,3 +6337,12 @@ Processing by UsersController#create as HTML
 Completed 200 OK in 290ms (Views: 0.2ms | ActiveRecord: 12.0ms)
 
 
+Started GET "/" for ::1 at 2021-07-25 16:12:39 -0500
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/katherinewei/.rbenv/versions/2.6.3/lib/ruby/gems/2.6.0/gems/activerecord-5.2.6/lib/active_record/log_subscriber.rb:98
+Processing by HomeController#index as HTML
+  Rendering home/home.html.erb within layouts/application
+  Rendered home/home.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 1224ms (Views: 1221.4ms | ActiveRecord: 0.0ms)
+
+
