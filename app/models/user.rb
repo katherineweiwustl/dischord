@@ -20,7 +20,6 @@ class User < ApplicationRecord
         self.save
         self.session_token
     end
-
    
 
     def password=(password)

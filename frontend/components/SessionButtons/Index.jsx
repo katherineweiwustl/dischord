@@ -1,21 +1,23 @@
-import React, {useState} from "react"
-import SessionModal from "../SessionModal/Index"
+import React from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { bindActionCreators } from "redux"
+import uiActionCreators from "../../state/actions/ui"
+import Modal from "../Modal"
+import SessionForm from "../SessionForm/Index"
 
 const SessionButtons = () => {
-    const [isOpen, setIsOpen] = useState(false)
-    console.log(isOpen)
-    // when we first render, isOpen (a state) is set to false
-    // when we want to CHANGE the state of isOpen, we use setIsOpen (provided to use by useState) to set isOpen
+    const dispatch = useDispatch()
+    const { openModal } = bindActionCreators(uiActionCreators, dispatch)
 
     return (
+        <>
         <div>
-            { isOpen ? <SessionModal setIsOpen={setIsOpen} /> : null }
-            <form onSubmit={ (e) => e.preventDefault()}>
-                <button onClick={() => setIsOpen(true)}>sign up</button>
-                <button>sign in</button>
-                <button>sign out</button>
-            </form>
+            <button onClick={() => openModal('signUp')}>sign up</button>
+            <button>sign in</button>
+            <button>sign out</button>
         </div>
+        </>
     )
 }
+
 export default SessionButtons 
