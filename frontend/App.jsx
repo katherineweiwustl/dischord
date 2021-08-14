@@ -24,10 +24,7 @@ const App = ({store}) => {
             openModal: ...
         }
         The return from bindActionCreators is: 
-        {
-         closeModal: ...,
-         openModal: ...   
-        }
+     
         but now closeModal/openModal has dispatch bound to them
         
         also remember destructuring: picking out a value based on a key

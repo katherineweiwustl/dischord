@@ -22,11 +22,11 @@ class ServersController < ApplicationController
         # create a new server using parameters that are obligatory in strong
         # params
         s_params = {:name => params[:server][:name], :owner_id => 1231}
-        server = Server.new(s_params)
+        @server = Server.new(s_params)
         if server.save!
-            render json: { server: server }
+            render json: { 'server created': server.to_json }
         else
-            render json: server.errors.full_messages, status: 400
+            render json: @server.errors.full_messages, status: 400
         end
     end
 
