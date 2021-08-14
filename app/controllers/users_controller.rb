@@ -41,12 +41,13 @@ end
 def create
     user = User.new(user_params)
     if user.save
+        login!(user)
         render json: { user: user }
     else
         render json: user.errors.full_messages, status: 400
         
     end
-    print('this is the create fxn')
+    # print('this is the create fxn')
 end
 
 # Update an existing resource. Called when route ends in /users/:id and method is PUT/PATCH

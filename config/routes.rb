@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   resources :users
   resources :servers
   resource :session, only: [:create, :destroy] # only one that is singular
-  root to: "home#index"
+  root to: 'static_pages#root'
 end

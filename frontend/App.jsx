@@ -9,13 +9,30 @@ import { bindActionCreators } from "redux"
 // import userActionCreators from "./state/action-creators/index"
 import Sidebar from "./components/Sidebar"
 
-const App = () => {
+const App = ({store}) => {
     const dispatch = useDispatch()
     const state = useSelector((state) => state) // takes a callback function
     const isOpen = useSelector(store => store.ui.modalOpen)
     const modalType = useSelector(store => store.ui.modalType)
     const { closeModal } = bindActionCreators(uiActionCreators, dispatch)
-
+    console.log(store.getState())
+    // Above is equivalent to => const closeModal = boundActionCreators.closeModal
+    /* 
+        uiActionCreators is an object: 
+        {
+            closeModal: ...,
+            openModal: ...
+        }
+        The return from bindActionCreators is: 
+        {
+         closeModal: ...,
+         openModal: ...   
+        }
+        but now closeModal/openModal has dispatch bound to them
+        
+        also remember destructuring: picking out a value based on a key
+        and assigning it to a new variable (with the same name as the key)
+    */
     return (
         <>
             {isOpen ? <Modal modalType={modalType} closeModal={closeModal} /> : null}   
