@@ -1,10 +1,13 @@
+
+
+
+
 export const closeModal = () => {
-  return (dispatch) => {
-      dispatch({
-          type: "CLOSE_MODAL",
-      })
-  }
+  return {
+        type: "CLOSE_MODAL",
+    }
 }
+
 export const openModal = (modalType) => {
   return (dispatch) => {
       dispatch({

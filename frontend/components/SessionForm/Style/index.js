@@ -16,7 +16,7 @@ export const InnerContainer = styled('div')`
     left: 50%;
     transform: translate(-50%, -50%);
 `
-export const SignUpForm = styled('form')`
+export const StyledForm = styled('form')`
     width: 40vw; // viewport width, kind of like percentages
     height: 70vh; //viewport height
     background-color: white;

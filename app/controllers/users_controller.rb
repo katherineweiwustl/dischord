@@ -39,12 +39,12 @@ end
 
 # Creates a resource. Called when route ends in /users and method is POST
 def create
-    user = User.new(user_params)
-    if user.save
-        login!(user)
-        render json: { user: user }
+    @user = User.new(user_params)
+    if @user.save!
+        login!(@user) 
+        render '_user.json'
     else
-        render json: user.errors.full_messages, status: 400
+        render json: @user.errors.full_messages, status: 400
         
     end
     # print('this is the create fxn')

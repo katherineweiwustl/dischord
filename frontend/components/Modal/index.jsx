@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import ServerForm from "../ServerForm"
-import SessionForm from "../SessionForm/SignUpForm/Index"
+import SingUpForm from "../SessionForm/SignUpForm/Index"
 import SignInForm from "../SessionForm/SignInForm/Index"
 import { InnerContainer, OuterContainer } from "./Style"
 
@@ -12,7 +12,7 @@ const Modal = ({ closeModal, modalType }) => {
     let component;
     switch (modalType) {
         case SIGN_UP:
-            component = <SessionForm />
+            component = <SingUpForm />
             break;
         case SIGN_IN:
             component = <SignInForm />

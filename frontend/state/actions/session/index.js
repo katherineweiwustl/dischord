@@ -1,36 +1,51 @@
 // action creator is just a function that dispatches an action
+import { closeModal } from '../ui/index'
+import { LOGIN, LOG_OUT } from "../../reducers/sessionReducer"
+import * as SessionApiUtil from '../../../utils/session_api_util'
 
-import { NormalModuleReplacementPlugin } from "webpack"
 
-export const loginUsername = (username) => {
-    return (dispatch) => {
-        dispatch({
-            type: "LOGIN_USERNAME",
-            payload: username
-        })
-    }
-}
-export const loginPassword = (password) => {
-    return (dispatch) => {
-        dispatch({
-            type: "LOGIN_PASSWORD",
-            payload: password
-        })
+const logoutActionCreator = () => {
+    return {
+        type: LOG_OUT
     }
 }
 
-export const signOut = () => {
-    return (dispatch) => {
-        dispatch( {
-            type: "SIGN_OUT",
-            payload: null
-        })
+const loginActionCreator = (frontendUserData) => { // here frontendUserData will be res.data, or username/id
+    return {
+        type: LOGIN,
+        payload: frontendUserData
     }
 }
+
+
+export const login = (userData) => { // Here userData will be username/password
+    return (dispatch) => {
+        return SessionApiUtil.signIn(userData)
+            .then((res) => dispatch(loginActionCreator(res.data)))
+            .then(() => dispatch(closeModal()))
+    }
+}
+
+export const logup = (userData) => { // Here userData will be username/password
+    return (dispatch) => {
+        return SessionApiUtil.signUp(userData)
+            .then((res) => dispatch(loginActionCreator(res.data)))
+            .then(() => dispatch(closeModal()))
+    }
+}
+
+
+export const logout = () => {
+    return (dispatch) => {
+        SessionApiUtil.signOut()
+            .then(() => dispatch(logoutActionCreator()))
+    }
+}
+
 export default {
-    loginUsername,
-    loginPassword,
-    signOut
+    login,
+    logout,
+    logup,
 }
 
 // create a central index.js file

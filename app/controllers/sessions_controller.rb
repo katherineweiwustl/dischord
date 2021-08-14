@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
         @user = User.find_by_credentials(params[:user][:username], params[:user][:password])
         if @user
             login!(@user)
-            render :loggedin
+            render "user.json"
         else
             render json: {"login status": "failed"}
         end

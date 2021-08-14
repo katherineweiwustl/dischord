@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { StyledServerForm } from "./Style"
-import { createServer } from "../utils/server_api_util"
+import { createServer } from "../../utils/server_api_util"
 
 const ServerForm = () => {
     const [serverName, setServerName] = useState('')

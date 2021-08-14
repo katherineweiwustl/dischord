@@ -1,11 +1,16 @@
+export const LOGIN = 'LOGIN'
+export const LOG_OUT = 'LOG_OUT'
+
 const reducer = (state = {}, action) => {
     // function that returns a state
     // read the action and return the appropriate state
     switch (action.type) {
-        case "LOGIN_USERNAME":
-            return { ...state, username: action.payload};
-        case "LOGIN_PASSWORD":
-            return { ...state, password: action.payload};
+        case LOGIN:
+            return { ...state, currentUser: action.payload};
+            break
+        case LOG_OUT:
+            return {...state, currentUser: null }
+            break
         default: 
             return state;
     }
