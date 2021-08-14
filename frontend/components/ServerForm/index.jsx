@@ -1,15 +1,18 @@
 import React, { useState } from "react"
 import { StyledServerForm } from "./Style"
-import { createServer } from "../../utils/server_api_util"
-
+// import { createServer } from "../../utils/server_api_util"
+import { useSelector, useDispatch } from "react-redux"
+import { bindActionCreators } from "redux"
+import serverActionCreators from "../../state/actions/servers"
 const ServerForm = () => {
     const [serverName, setServerName] = useState('')
+    const dispatch = useDispatch()
+    const { createServer } = bindActionCreators(serverActionCreators, dispatch)
     const handleSubmit = (e) => {
         e.preventDefault() // stops page from reloading when submitted
-        console.log('HASDFASDFASDF')
         createServer({
             name: serverName // strong params REQUIRES a key called name
-        }).then(res => console.log(res)) // res = response; if it's successful, console log the response
+        })// .then(res => console.log(res)) // res = response; if it's successful, console log the response
     }
     return (
         <StyledServerForm onSubmit={handleSubmit}>
