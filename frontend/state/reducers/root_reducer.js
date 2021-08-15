@@ -3,12 +3,14 @@
 import { combineReducers } from "redux"
 import sessionReducer from "./sessionReducer"
 import uiReducer from './ui_reducer'
+import serverReducer from './server_reducer'
 
 const reducers = combineReducers({
     // takes in an object of all of the reducers combined
     // key value pairs
     session: sessionReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    server: serverReducer
 })
 export default reducers
 

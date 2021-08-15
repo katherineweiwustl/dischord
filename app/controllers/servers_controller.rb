@@ -23,8 +23,9 @@ class ServersController < ApplicationController
         # params
         s_params = {:name => params[:server][:name], :owner_id => 1231}
         @server = Server.new(s_params)
-        if server.save!
-            render json: { 'server created': server.to_json }
+        if @server.save!
+            # render json: { 'server created': server.to_json }
+            render '_server.json'
         else
             render json: @server.errors.full_messages, status: 400
         end

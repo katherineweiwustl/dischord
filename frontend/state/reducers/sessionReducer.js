@@ -12,7 +12,7 @@ const reducer = (state = {}, action) => {
             return {...state, currentUser: null }
             break
         default: 
-            return state;
+            return state
     }
 }
 

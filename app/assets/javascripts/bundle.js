@@ -2780,10 +2780,7 @@ var App = function App(_ref) {
           openModal: ...
       }
       The return from bindActionCreators is: 
-      {
-       closeModal: ...,
-       openModal: ...   
-      }
+   
       but now closeModal/openModal has dispatch bound to them
       
       also remember destructuring: picking out a value based on a key
@@ -2971,7 +2968,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Style */ "./frontend/components/ServerForm/Style/index.js");
-/* harmony import */ var _utils_server_api_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/server_api_util */ "./frontend/utils/server_api_util.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _state_actions_servers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../state/actions/servers */ "./frontend/state/actions/servers/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2985,6 +2984,9 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+ // import { createServer } from "../../utils/server_api_util"
+
+
 
 
 
@@ -2994,16 +2996,18 @@ var ServerForm = function ServerForm() {
       serverName = _useState2[0],
       setServerName = _useState2[1];
 
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+
+  var _bindActionCreators = (0,redux__WEBPACK_IMPORTED_MODULE_4__.bindActionCreators)(_state_actions_servers__WEBPACK_IMPORTED_MODULE_3__.default, dispatch),
+      createServer = _bindActionCreators.createServer;
+
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault(); // stops page from reloading when submitted
 
-    console.log('HASDFASDFASDF');
-    (0,_utils_server_api_util__WEBPACK_IMPORTED_MODULE_2__.createServer)({
+    createServer({
       name: serverName // strong params REQUIRES a key called name
 
-    }).then(function (res) {
-      return console.log(res);
-    }); // res = response; if it's successful, console log the response
+    }); // .then(res => console.log(res)) // res = response; if it's successful, console log the response
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Style__WEBPACK_IMPORTED_MODULE_1__.StyledServerForm, {
@@ -3365,6 +3369,50 @@ var Sidebar = function Sidebar() {
 
 /***/ }),
 
+/***/ "./frontend/state/actions/servers/index.js":
+/*!*************************************************!*\
+  !*** ./frontend/state/actions/servers/index.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createServer": () => (/* binding */ createServer),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ui_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/index */ "./frontend/state/actions/ui/index.js");
+/* harmony import */ var _reducers_server_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/server_reducer */ "./frontend/state/reducers/server_reducer.js");
+/* harmony import */ var _utils_server_api_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/server_api_util */ "./frontend/utils/server_api_util.js");
+// action creator is just a function that dispatches an action
+
+
+
+
+var createServerActionCreator = function createServerActionCreator(serverData) {
+  return {
+    type: _reducers_server_reducer__WEBPACK_IMPORTED_MODULE_1__.CREATE_SERVER,
+    payload: serverData
+  };
+};
+
+var createServer = function createServer(serverData) {
+  // Here userData will be username/password
+  return function (dispatch) {
+    return _utils_server_api_util__WEBPACK_IMPORTED_MODULE_2__.createServer(serverData).then(function (res) {
+      return dispatch(createServerActionCreator(res.data));
+    }).then(function () {
+      return dispatch((0,_ui_index__WEBPACK_IMPORTED_MODULE_0__.closeModal)());
+    });
+  };
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  createServer: createServer
+}); // create a central index.js file
+// bind provides the dispatch function to the action creators (it's a shortcut!)
+
+/***/ }),
+
 /***/ "./frontend/state/actions/session/index.js":
 /*!*************************************************!*\
   !*** ./frontend/state/actions/session/index.js ***!
@@ -3481,20 +3529,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _sessionReducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sessionReducer */ "./frontend/state/reducers/sessionReducer.js");
 /* harmony import */ var _ui_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui_reducer */ "./frontend/state/reducers/ui_reducer.js");
+/* harmony import */ var _server_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./server_reducer */ "./frontend/state/reducers/server_reducer.js");
 // combine all the reducers in the index.jsx file
 
 
 
-var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_2__.combineReducers)({
+
+var reducers = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
   // takes in an object of all of the reducers combined
   // key value pairs
   session: _sessionReducer__WEBPACK_IMPORTED_MODULE_0__.default,
-  ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_1__.default
+  ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_1__.default,
+  server: _server_reducer__WEBPACK_IMPORTED_MODULE_2__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducers); // last step is to create store
+
+/***/ }),
+
+/***/ "./frontend/state/reducers/server_reducer.js":
+/*!***************************************************!*\
+  !*** ./frontend/state/reducers/server_reducer.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CREATE_SERVER": () => (/* binding */ CREATE_SERVER),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var CREATE_SERVER = 'CREATE_SERVER';
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  // function that returns a state
+  // read the action and return the appropriate state
+  switch (action.type) {
+    case CREATE_SERVER:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        serverData: action.payload
+      });
+      break;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reducer); // you can have multiple reducers, but you have to
+// combine multiple reducers to put them in the store
+// switch statements are just if elses (just switch and cases; same as: else if else if else if...)
 
 /***/ }),
 
