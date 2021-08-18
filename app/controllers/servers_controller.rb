@@ -1,11 +1,12 @@
 class ServersController < ApplicationController
-    # params = the columns
     # Server is the object/db "type"
     # .save is used to save something in the database
     skip_before_action :verify_authenticity_token
 
     def index
-        render Server.all
+        # using a database query to pull all the servers in which the user is a member of
+        @servers = Server.where("members @> ARRAY[?]::integer[]", [])    
+        render 'servers.json'
     end
 
     def show
@@ -21,8 +22,9 @@ class ServersController < ApplicationController
     def create
         # create a new server using parameters that are obligatory in strong
         # params
-        s_params = {:name => params[:server][:name], :owner_id => 1231}
-        @server = Server.new(s_params)
+        # s_params = {:name => params[:server][:name], :owner_id }
+        @server = Server.new(server_params)
+        @server.members.push(params[:server][:owner_id])
         if @server.save!
             # render json: { 'server created': server.to_json }
             render '_server.json'
@@ -49,7 +51,8 @@ class ServersController < ApplicationController
     private
 
     def server_params
-        params.require(:server).permit(:name)
+        params.require(:server).permit(:name,  :owner_id)
     end
 
 end
+

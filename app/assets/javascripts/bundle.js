@@ -2991,6 +2991,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var ServerForm = function ServerForm() {
+  var owner_id = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(function (store) {
+    return store.session.currentUser.id;
+  });
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       serverName = _useState2[0],
@@ -3005,8 +3009,8 @@ var ServerForm = function ServerForm() {
     e.preventDefault(); // stops page from reloading when submitted
 
     createServer({
-      name: serverName // strong params REQUIRES a key called name
-
+      name: serverName,
+      owner_id: owner_id
     }); // .then(res => console.log(res)) // res = response; if it's successful, console log the response
   };
 
@@ -3731,7 +3735,8 @@ var configureStore = function configureStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createServer": () => (/* binding */ createServer)
+/* harmony export */   "createServer": () => (/* binding */ createServer),
+/* harmony export */   "getServers": () => (/* binding */ getServers)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -3740,6 +3745,11 @@ var createServer = function createServer(serverData) {
   return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/servers", {
     server: serverData
   }); // has to be under top level key of server; check users_controller and its strong params
+};
+var getServers = function getServers(user_id) {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/servers", {
+    user_id: user_id
+  });
 }; // axios is a library that allows us to send http requests
 // this sends a post request to the backend which will hit our servers CONTROLLER,
 // the data is { server: serverData } which is obtained in the form

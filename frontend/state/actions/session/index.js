@@ -17,7 +17,6 @@ const loginActionCreator = (frontendUserData) => { // here frontendUserData will
     }
 }
 
-
 export const login = (userData) => { // Here userData will be username/password
     return (dispatch) => {
         return SessionApiUtil.signIn(userData)
