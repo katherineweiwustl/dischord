@@ -4,8 +4,9 @@ export const createServer = (serverData) => {
     return axios.post("/servers", { server: serverData }) // has to be under top level key of server; check users_controller and its strong params
 }
 
-export const getServers = (user_id) => {
-    return axios.get("/servers", { user_id })
+export const getServers = (getAllServers) => {
+    return axios.get("/servers", {params: { allServers: getAllServers }})
+    
 }
 
 

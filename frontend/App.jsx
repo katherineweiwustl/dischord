@@ -1,13 +1,15 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import Header from "./components/Header/Index"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import Modal from "./components/Modal"
-import uiActionCreators from "./state/actions/ui"
 // bind action creators and give it the dispatch variable
 import { bindActionCreators } from "redux"
-// import userActionCreators from "./state/action-creators/index"
+
+import Header from "./components/Header/Index"
+import Modal from "./components/Modal"
 import Sidebar from "./components/Sidebar"
+
+import uiActionCreators from "./state/actions/ui"
+import { getServers as apiGetServers } from "./utils/server_api_util"
+import serverActionCreators from "./state/actions/servers"
 
 const App = ({store}) => {
     const dispatch = useDispatch()
@@ -15,21 +17,13 @@ const App = ({store}) => {
     const isOpen = useSelector(store => store.ui.modalOpen)
     const modalType = useSelector(store => store.ui.modalType)
     const { closeModal } = bindActionCreators(uiActionCreators, dispatch)
-    console.log(store.getState())
-    // Above is equivalent to => const closeModal = boundActionCreators.closeModal
-    /* 
-        uiActionCreators is an object: 
-        {
-            closeModal: ...,
-            openModal: ...
-        }
-        The return from bindActionCreators is: 
-     
-        but now closeModal/openModal has dispatch bound to them
-        
-        also remember destructuring: picking out a value based on a key
-        and assigning it to a new variable (with the same name as the key)
-    */
+    const { getServers } = bindActionCreators(serverActionCreators, dispatch)
+
+    useEffect(() => {
+      getServers(false) // getAllServers = false
+    }, [])
+    
+
     return (
         <>
             {isOpen ? <Modal modalType={modalType} closeModal={closeModal} /> : null}   

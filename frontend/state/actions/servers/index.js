@@ -1,6 +1,6 @@
 // action creator is just a function that dispatches an action
 import { closeModal } from '../ui/index'
-import { CREATE_SERVER } from "../../reducers/server_reducer"
+import { CREATE_SERVER, GET_SERVERS } from "../../reducers/server_reducer"
 import * as ServerApiUtil from '../../../utils/server_api_util'
 
 
@@ -19,8 +19,24 @@ export const createServer = (serverData) => { // Here userData will be username/
     }
 }
 
+const getServersActionCreator = (servers) => {
+    return {
+        type: GET_SERVERS,
+        payload: servers
+    }
+}
+
+export const getServers = (getAllServers) => {
+    return (dispatch) => {
+        return ServerApiUtil.getServers(getAllServers)
+            .then((res) => dispatch(getServersActionCreator(res.data)))
+            .then(() => dispatch(closeModal()))
+    }
+}
+
 export default {
-    createServer
+    createServer,
+    getServers
 }
 
 // create a central index.js file

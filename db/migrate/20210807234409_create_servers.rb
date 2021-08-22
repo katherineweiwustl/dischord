@@ -3,8 +3,11 @@ class CreateServers < ActiveRecord::Migration[5.2]
     create_table :servers do |t|
       t.string :name, null:false
       t.integer :owner_id, null:false
-      t.integer :member_ids, null:false, array:true, :default => []
       t.timestamps
     end
+    add_index :servers, :owner_id, unique: true
   end
 end
+
+
+

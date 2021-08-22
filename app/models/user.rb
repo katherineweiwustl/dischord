@@ -5,6 +5,12 @@ class User < ApplicationRecord
     
     attr_reader :password
     after_initialize :ensure_session_token
+
+    has_many :members
+
+    has_many :servers, 
+      through: :members, 
+      source: :server
     
     # self. methods are called on the class itself, instance methods are not
 

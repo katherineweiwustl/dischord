@@ -5,7 +5,13 @@ class ServersController < ApplicationController
 
     def index
         # using a database query to pull all the servers in which the user is a member of
-        @servers = Server.where("members @> ARRAY[?]::integer[]", [])    
+        #figure out how to send a query param with api request
+        allServers = params[:server][:allServers] # in the servers get axios request there's a allServers param
+        if (allServers)
+          @servers = Server.all
+        else 
+          @servers = current_user.servers # this is just getting the servers that the user is a part of through the members db
+        # end
         render 'servers.json'
     end
 
@@ -22,11 +28,9 @@ class ServersController < ApplicationController
     def create
         # create a new server using parameters that are obligatory in strong
         # params
-        # s_params = {:name => params[:server][:name], :owner_id }
         @server = Server.new(server_params)
-        @server.members.push(params[:server][:owner_id])
         if @server.save!
-            # render json: { 'server created': server.to_json }
+            Member.create({:server_id => @server.id, :user_id => @server.owner_id})
             render '_server.json'
         else
             render json: @server.errors.full_messages, status: 400
@@ -51,7 +55,7 @@ class ServersController < ApplicationController
     private
 
     def server_params
-        params.require(:server).permit(:name,  :owner_id)
+        params.require(:server).permit(:name, :owner_id)
     end
 
 end

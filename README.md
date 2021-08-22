@@ -5,20 +5,14 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
+backend
+1. Make members controller
+2. make members routes
+3. make endpoint for creating new member entry
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+frontned
+1. button to join server
+2. when click button, send http/api request to backend to create member entry
